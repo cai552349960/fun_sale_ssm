@@ -1,8 +1,10 @@
 package cn.hft.service.impl;
 
 import cn.hft.entity.FunSale;
+import cn.hft.entity.PageData;
 import cn.hft.mapper.IFunSaleDao;
 import cn.hft.service.IFunSaleService;
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,8 +16,10 @@ public class FunSaleServiceImpl implements IFunSaleService {
     @Autowired
     private IFunSaleDao funSaleDao;
     @Override
-    public List<FunSale> findAll() {
-        return funSaleDao.findAll();
+    public List<FunSale> findAll(Integer pageNum,Integer pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<FunSale> list = funSaleDao.findAll();
+        return list;
     }
 
     @Override

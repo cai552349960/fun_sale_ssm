@@ -37,6 +37,20 @@
     <!-- 把交给IOC管理 SqlSessionFactory -->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
+        <!-- 传入PageHelper的插件 -->
+    <!--    <property name="plugins">
+            <array>
+                &lt;!&ndash; 传入插件的对象 &ndash;&gt;
+                    <bean class="com.github.pagehelper.PageHelper">
+                    <property name="properties">
+                        <props>
+                            <prop key="dialect">sqlserver</prop>
+                            <prop key="reasonable">true</prop>
+                        </props>
+                    </property>
+                </bean>
+            </array>
+        </property>-->
 
     </bean>
     <!-- 扫描dao接口 -->
@@ -49,6 +63,8 @@
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource"/>
     </bean>
+
+
 
     <tx:annotation-driven transaction-manager="transactionManager"/>
 
