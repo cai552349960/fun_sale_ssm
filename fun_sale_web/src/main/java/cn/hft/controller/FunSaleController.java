@@ -45,8 +45,8 @@ public class FunSaleController {
             e.printStackTrace();
         }
         PageInfo<FunSale> funSalePageInfo = new PageInfo<>(all);
-        funSalePageInfo.setPageNum(page);
-        funSalePageInfo.setPageSize(size);
+       /* funSalePageInfo.setPageNum(page);
+        funSalePageInfo.setPageSize(size);*/
         List<FunSale> list = funSalePageInfo.getList();
         for (int i = 0; i < list.size(); i++) {
             System.out.println(list.get(i));

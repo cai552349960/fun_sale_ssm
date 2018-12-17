@@ -17,7 +17,8 @@ public class FunSaleServiceImpl implements IFunSaleService {
     private IFunSaleDao funSaleDao;
     @Override
     public List<FunSale> findAll(Integer pageNum,Integer pageSize) {
-        PageHelper.startPage(pageNum, pageSize);
+      PageHelper.startPage(pageNum, pageSize);
+      PageHelper.orderBy("UPDATE_TIME");
         List<FunSale> list = funSaleDao.findAll();
         return list;
     }
