@@ -9,7 +9,7 @@
 <script>
     $(function (){
         $.get("funSale/findAll.do",{page:1,size:20},function (data) {
-            var str=' <td>房源ID</td>\n' +
+            var str=' <tr><td>房源ID</td>\n' +
                 '        <td>房源标题</td>\n' +
                 '        <td>楼盘名称</td>\n' +
                 '        <td>地址</td>\n' +
@@ -19,11 +19,11 @@
                 '        <td>片区名称</td>\n' +
                 '        <td>最后更新时间</td>\n' +
                 '        <td>售价</td>\n' +
-                '        <td>单价</td>';
+                '        <td>单价</td></tr>';
             for (var i= 0;i<data.list.length;i++) {
                 var funSale = data.list[i];
                 var strl;
-                str += '<tr><td>' + funSale.saleID + '</td><td>' + funSale.saleSubject + '</td><td>' + funSale.buildName + '</td><td>' + funSale.tradeAddr + '</td><td>' + funSale.saleRoom + '</td><td>' + funSale.saleInnerarea + '</td><td>' + funSale.regionName + '</td><td>' + funSale.sectionName + '</td><td>' + funSale.updateTime + '</td><td>' + funSale.saleTotalPrice + '</td><td>' + funSale.saleUnitPrice + '</td></tr>';
+                strl= '<tr><td>' + funSale.saleID + '</td><td>' + funSale.saleSubject + '</td><td>' + funSale.buildName + '</td><td>' + funSale.tradeAddr + '</td><td>' + funSale.saleRoom + '</td><td>' + funSale.saleInnerarea + '</td><td>' + funSale.regionName + '</td><td>' + funSale.sectionName + '</td><td>' + funSale.updateTime + '</td><td>' + funSale.saleTotalPrice + '</td><td>' + funSale.saleUnitPrice + '</td></tr>';
                 str += strl;
             }
             $("#funSale").html(str);
