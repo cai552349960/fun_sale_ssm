@@ -22,10 +22,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Controller
 @RequestMapping("/funSale")
@@ -35,9 +32,6 @@ public class FunSaleController {
     @RequestMapping("/findAll.do")
     @ResponseBody
     public PageInfo<FunSale> findAll(@RequestParam(name = "page",required = true,defaultValue = "1")Integer page,@RequestParam(name="size",required = true,defaultValue = "20")Integer size) throws Exception {
-        System.out.println("进入findAll方法");
-        System.out.println(page);
-        System.out.println(size);
         List<FunSale> all = null;
         try {
             all = funSaleService.findAll(page,size);
@@ -48,9 +42,6 @@ public class FunSaleController {
        /* funSalePageInfo.setPageNum(page);
         funSalePageInfo.setPageSize(size);*/
         List<FunSale> list = funSalePageInfo.getList();
-        for (int i = 0; i < list.size(); i++) {
-            System.out.println(list.get(i));
-        }
         System.out.println(list.size());
         return funSalePageInfo;
     }
@@ -68,14 +59,17 @@ public class FunSaleController {
      */
     @RequestMapping("/updateByFunSale")
     @ResponseBody
-    public Result updateByFunSale(@RequestBody FunSale funSale) {
+    public Result updateByFunSale( @RequestBody  FunSale funSale) {
+        Result result = null;
         try {
             funSaleService.updateByFunSale(funSale);
-            return new Result(1, "修改成功");
+            result = new Result(1, "修改成功");
         } catch (Exception e) {
             e.printStackTrace();
             return new Result(0, "修改失败");
+
         }
+        return result;
     }
 
     /**
@@ -86,7 +80,7 @@ public class FunSaleController {
     @RequestMapping("/insert")
     @ResponseBody
     public Result insert(@RequestBody FunSale funSale) {
-        try {
+        try {;
             funSaleService.insert(funSale);
             return new Result(1, "添加成功");
         } catch (Exception e) {

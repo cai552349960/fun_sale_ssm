@@ -7,9 +7,11 @@
 <!--导入jquery-->
 <script src="js/jquery-3.3.1.js"></script>
 <script>
-    $(function (){
-        $.get("funSale/findAll.do",{page:1,size:20},function (data) {
-            var str=' <tr><td>房源ID</td>\n' +
+    $(function () {
+
+        $.get("funSale/findAll.do", {page: 1, size: 20}, function (data) {
+            var str = '<tr border="1" cellpadding="10px" title="房源出售表">\n' +
+                '        <td>房源ID</td>\n' +
                 '        <td>房源标题</td>\n' +
                 '        <td>楼盘名称</td>\n' +
                 '        <td>地址</td>\n' +
@@ -19,26 +21,88 @@
                 '        <td>片区名称</td>\n' +
                 '        <td>最后更新时间</td>\n' +
                 '        <td>售价</td>\n' +
-                '        <td>单价</td></tr>';
-            for (var i= 0;i<data.list.length;i++) {
+                '        <td>单价</td>\n' +
+                '        <td>删除</td>\n' +
+                '        <td>修改</td>\n' +
+                '    </tr>';
+            for (var i = 0; i < data.list.length; i++) {
                 var funSale = data.list[i];
                 var strl;
-                strl= '<tr><td>' + funSale.saleID + '</td><td>' + funSale.saleSubject + '</td><td>' + funSale.buildName + '</td><td>' + funSale.tradeAddr + '</td><td>' + funSale.saleRoom + '</td><td>' + funSale.saleInnerarea + '</td><td>' + funSale.regionName + '</td><td>' + funSale.sectionName + '</td><td>' + funSale.updateTime + '</td><td>' + funSale.saleTotalPrice + '</td><td>' + funSale.saleUnitPrice + '</td></tr>';
+                strl = '<tr><td>' + funSale.saleID + '</td><td>' + funSale.saleSubject + '</td><td>' + funSale.buildName + '</td><td>' + funSale.tradeAddr + '</td><td>' + funSale.saleRoom + '</td><td>'
+                    + funSale.saleInnerarea + '</td><td>' + funSale.regionName + '</td><td>' + funSale.sectionName + '</td><td>' + funSale.updateTime + '</td><td>' + funSale.saleTotalPrice + '</td><td>'
+                    + funSale.saleUnitPrice + '</td><td><button value="' + funSale.saleID + '">删除</button></td><td><button value="' + funSale.saleID + '" onclick="update('+funSale.saleID+')">修改</button></td></tr>';
                 str += strl;
             }
             $("#funSale").html(str);
         })
+
     });
 
+
+    function update(saleId) {
+        window.location.href = "/updata.html?saleId="+ saleId;
+    }
+
+    function findById() {
+        $.ajax({
+            //几个参数需要注意一下
+            type: "get",//方法类型
+            dataType: "json",//预期服务器返回的数据类型
+            url: "/funSale/findById.do" ,//url
+            data: $('#form1').serialize(),
+            success: function (data) {
+                console.log(data);//打印服务端返回的数据(调试用)
+                var str = '<tr border="1" cellpadding="10px" title="房源出售表">\n' +
+                    '        <td>房源ID</td>\n' +
+                    '        <td>房源标题</td>\n' +
+                    '        <td>楼盘名称</td>\n' +
+                    '        <td>地址</td>\n' +
+                    '        <td>房/室</td>\n' +
+                    '        <td>套内面积</td>\n' +
+                    '        <td>区域名称</td>\n' +
+                    '        <td>片区名称</td>\n' +
+                    '        <td>最后更新时间</td>\n' +
+                    '        <td>售价</td>\n' +
+                    '        <td>单价</td>\n' +
+                    '        <td>删除</td>\n' +
+                    '        <td>修改</td>\n' +
+                    '    </tr>';
+                var strl = '<tr><td>' + data.saleID + '</td><td>' + data.saleSubject + '</td><td>' + data.buildName + '</td><td>' + data.tradeAddr + '</td><td>' + data.saleRoom + '</td><td>'
+                    + data.saleInnerarea + '</td><td>' + data.regionName + '</td><td>' + data.sectionName + '</td><td>' + data.updateTime + '</td><td>' + data.saleTotalPrice + '</td><td>'
+                    + data.saleUnitPrice + '</td><td><button value="' + funSale.saleID + '">删除</button></td><td><button name="saleId" value="' + data.saleID + '" onclick="update('+data.saleID+')">修改</button></td></tr>';
+                str += strl;
+                $("#funSale").html(str);
+            },
+            error : function() {
+                alert("异常！");
+            }
+        });
+    }
+
+    function insert() {
+        window.location.href = "/insert.html";
+    }
+    function creatXml(page,size) {
+        $.get("funSale/createXml.do", {page: 1, size: 20}, function (data) {
+            alert(data.messager);
+        });
+    }
+
 </script>
-<body>
-<form action="/demo/demo_form.asp" align="center">
+<table>
+<div>
+<form id="form1" onsubmit="return false" action="##" method="get"  )>
     根据房源ID查询:
-    <input type="text" name="firstname" value="Mickey">
-    <br>
+    <input type="text" name="saleId" value="Mickey">
+    <input type="button" value="查询" onclick="findById()" align="center">
+
+</form>
+<button onclick="insert()" align="left">新增</button>
+
+        <br>
     <tr></tr>
     <tr></tr>
-    <table id="funSale"border="1" bgcolor="#87ceeb"  align="center" cellpadding="10px" cellspacing="5px">
+    <table id="funSale"border="1" bgcolor="#f0f8ff"  align="center" cellpadding="10px" cellspacing="5px">
     <tr border="1" cellpadding="10px" title="房源出售表">
         <td>房源ID</td>
         <td>房源标题</td>
@@ -51,9 +115,16 @@
         <td>最后更新时间</td>
         <td>售价</td>
         <td>单价</td>
+        <td>删除</td>
+        <td>修改</td>
     </tr>
+    </table>
+    <tr></tr>
+    <tr></tr>
+    <tr></tr>
+    <button onclick="creatXml()">导出本页</button>
+    <tr></tr>
 
-    <table border="1px" cellspacing="0" cellpadding="0" style="float: right;">
         <table border="1px" cellspacing="0" cellpadding="0" style="float: right;">
             <tr>
                 <td>共 ${pageLength} 页</td>
@@ -66,5 +137,8 @@
                 </td>
 
                 <td>当前是第:${pageNo}页</td>
+                </div>
+        </table>
+
 </body>
 </html>

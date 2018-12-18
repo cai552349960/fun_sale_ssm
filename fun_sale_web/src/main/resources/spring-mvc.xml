@@ -19,6 +19,8 @@
     <context:component-scan base-package="cn.hft.controller" >
     </context:component-scan>
      <!--开启对SpringMVC注解的支持 -->
+
+    <mvc:default-servlet-handler/>
     <!--<mvc:annotation-driven />-->
     <mvc:annotation-driven>
         <mvc:message-converters>

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 @Service
 @Transactional
@@ -30,11 +31,14 @@ public class FunSaleServiceImpl implements IFunSaleService {
 
     @Override
     public void updateByFunSale(FunSale funSale) {
+        funSale.setUpdateTime(new Date());
         funSaleDao.updateByFunSale(funSale);
     }
 
     @Override
     public void insert(FunSale funSale) {
+        funSale.setCreationTime(new Date());
+        funSale.setUpdateTime(new Date());
         funSaleDao.insert(funSale);
     }
 
