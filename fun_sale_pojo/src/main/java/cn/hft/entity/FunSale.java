@@ -2,6 +2,7 @@ package cn.hft.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.Date;
 
 /**
@@ -12,7 +13,7 @@ public class FunSale implements Serializable {
     private Integer compID;//公司ID
     private Integer cityID;//    城市ID
     private Integer deptID;//分店ID
-    private Date creationTime;//登记时间
+    private Timestamp creationTime;//登记时间
     private String saleNo;//系统编码
     private Integer saleUseage;//房屋用途
     private String saleSubject;//房源标题
@@ -25,7 +26,7 @@ public class FunSale implements Serializable {
     private Double saleInnerarea;//套内面积
     private String regionName;//行政区名称，区域名称
     private String sectionName;//片区名称，板块名称
-    private Date updateTime;//最后更新时间
+    private Timestamp updateTime;//最后更新时间
     private BigDecimal saleTotalPrice;//售价
     private BigDecimal saleUnitPrice;//单价
     private Integer saleConsign;//委托
@@ -117,11 +118,11 @@ public class FunSale implements Serializable {
         this.deptID = deptID;
     }
 
-    public Date getCreationTime() {
+    public Timestamp getCreationTime() {
         return creationTime;
     }
 
-    public void setCreationTime(Date creationTime) {
+    public void setCreationTime(Timestamp creationTime) {
         this.creationTime = creationTime;
     }
 
@@ -221,11 +222,11 @@ public class FunSale implements Serializable {
         this.sectionName = sectionName;
     }
 
-    public Date getUpdateTime() {
+    public Timestamp getUpdateTime() {
         return updateTime;
     }
 
-    public void setUpdateTime(Date updateTime) {
+    public void setUpdateTime(Timestamp updateTime) {
         this.updateTime = updateTime;
     }
 

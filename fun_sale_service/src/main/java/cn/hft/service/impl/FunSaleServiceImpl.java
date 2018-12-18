@@ -31,14 +31,12 @@ public class FunSaleServiceImpl implements IFunSaleService {
 
     @Override
     public void updateByFunSale(FunSale funSale) {
-        funSale.setUpdateTime(new Date());
+
         funSaleDao.updateByFunSale(funSale);
     }
 
     @Override
     public void insert(FunSale funSale) {
-        funSale.setCreationTime(new Date());
-        funSale.setUpdateTime(new Date());
         funSaleDao.insert(funSale);
     }
 

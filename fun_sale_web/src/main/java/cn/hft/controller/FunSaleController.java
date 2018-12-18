@@ -3,7 +3,6 @@ package cn.hft.controller;
 import cn.hft.entity.FunSale;
 import cn.hft.entity.Result;
 import cn.hft.service.IFunSaleService;
-import cn.hft.service.impl.FunSaleServiceImpl;
 import com.github.pagehelper.PageInfo;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
@@ -21,6 +20,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -29,9 +29,10 @@ import java.util.*;
 public class FunSaleController {
     @Autowired
     private IFunSaleService funSaleService;
-    @RequestMapping("/findAll.do")
+    @RequestMapping("/findAll")
     @ResponseBody
-    public PageInfo<FunSale> findAll(@RequestParam(name = "page",required = true,defaultValue = "1")Integer page,@RequestParam(name="size",required = true,defaultValue = "20")Integer size) throws Exception {
+    public PageInfo<FunSale> findAll(@RequestParam(name = "page",required = true,defaultValue = "1")Integer page, @RequestParam(name = "size", required = true, defaultValue = "20")Integer size) throws Exception {
+
         List<FunSale> all = null;
         try {
             all = funSaleService.findAll(page,size);
@@ -42,7 +43,6 @@ public class FunSaleController {
        /* funSalePageInfo.setPageNum(page);
         funSalePageInfo.setPageSize(size);*/
         List<FunSale> list = funSalePageInfo.getList();
-        System.out.println(list.size());
         return funSalePageInfo;
     }
 
@@ -59,8 +59,9 @@ public class FunSaleController {
      */
     @RequestMapping("/updateByFunSale")
     @ResponseBody
-    public Result updateByFunSale( @RequestBody  FunSale funSale) {
+    public Result updateByFunSale(@RequestBody FunSale funSale) {
         Result result = null;
+        funSale.setUpdateTime(new Timestamp(new Date().getTime()));
         try {
             funSaleService.updateByFunSale(funSale);
             result = new Result(1, "修改成功");
@@ -81,6 +82,8 @@ public class FunSaleController {
     @ResponseBody
     public Result insert(@RequestBody FunSale funSale) {
         try {;
+            funSale.setCreationTime(new Timestamp(new Date().getTime()));
+            funSale.setUpdateTime(new Timestamp(new Date().getTime()));
             funSaleService.insert(funSale);
             return new Result(1, "添加成功");
         } catch (Exception e) {
@@ -96,9 +99,9 @@ public class FunSaleController {
      */
     @RequestMapping("/deleteById")
     @ResponseBody
-    public Result deleteById(@RequestParam(name = "saleId", required = true, defaultValue = "1")Integer saleID) {
+    public Result deleteById(@RequestParam(name = "saleId", required = true, defaultValue = "1")Integer saleId) {
         try {
-            funSaleService.deleteById(saleID);
+            funSaleService.deleteById(saleId);
             return new Result(1, "删除成功");
         } catch (Exception e) {
             e.printStackTrace();

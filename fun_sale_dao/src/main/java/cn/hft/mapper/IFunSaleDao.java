@@ -67,7 +67,7 @@ public interface IFunSaleDao {
      */
     @Insert( "insert into [FUN_SALE](COMP_ID,CITY_ID,DEPT_ID,CREATION_TIME,SALE_NO,SALE_USEAGE,SALE_SUBJECT,NUMERIC,SALE_SOURCE,SALE_EXPLRTH,BUILD_NAME,TRADE_ADDR,SALE_ROOM,SALE_INNERAREA,REGION_NAME," +
             "SECTION_NAME,UPDATE_TIME,SALE_TOTAL_PRICE,SALE_UNIT_PRICE,SALE_CONSIGN,SALE_MAP,PLATE_TYPE,SALE_STATUS,INFO_TYPE,SHARE_FLAG,RED_FLAG,FROM_PUBLIC,SALE_ID_OLD,HOUSE_BARGAIN,PANORAMA_MAP,YOUYOU_DEAL,IS_SALE_LEASE,HOUSE_SITUATION,OLD_TRUE_FLAG) " +
-            "VALUES(#{compID},#{cityID},#{deptID},#{creationTime},#{saleNo},#{saleUseage},#{saleSubject},#{numeric},#{saleSource},#{saleExplrth},#{buildName},#{tradeAddr},#{saleRoom},#{saleInnerarea},#{regionName}," +
+            "VALUES(VALUES(NEXT VALUE FOR SEQ_FUN_SALE__SALE_ID,#{compID},#{cityID},#{deptID},#{creationTime},#{saleNo},#{saleUseage},#{saleSubject},#{numeric},#{saleSource},#{saleExplrth},#{buildName},#{tradeAddr},#{saleRoom},#{saleInnerarea},#{regionName}," +
             "#{sectionName},#{updateTime},#{saleTotalPrice},#{saleUnitPrice},#{saleConsign},#{saleMap},#{plateType},#{saleStatus},#{infoType},#{shareFlag},#{redFlag},#{fromPublic},#{saleIdOld},#{houseBargain},#{panoramaMap}," +
             "#{youyouDeal},#{isSaleLease},#{houseSituation},#{oldTrueFlag}) ")
     public void insert(FunSale funSale);

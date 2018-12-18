@@ -80,17 +80,42 @@
         }
 
         function commit() {
+            /*var data = getUser();
+            alert(data);*/
+            var data = $('#form1').serializeObject();
+            data = JSON.stringify(data);
            $.ajax({
                type: "post",//方法类型
                contentType: 'application/json;charset=UTF-8',
                dataType: "json",//预期服务器返回的数据类型
-               url: "/fnuSale/updateByFunSale" ,//url
-               data: $('#form1').serialize(),
+               url: "/funSale/updateByFunSale" ,//url
+               data:data,
                success:function (data) {
                    alert(data.messager);
                }
            });
        }
+        /*function getUser(){
+            console.log($('#form1').serializeJSON());
+            console.log(JSON.stringify($('#formDemo').serializeJSON()));
+            return JSON.stringify($('#formDemo').serializeJSON());
+        }*/
+        $.fn.serializeObject = function()
+        {
+            var o = {};
+            var a = this.serializeArray();
+            $.each(a, function() {
+                if (o[this.name]) {
+                    if (!o[this.name].push) {
+                        o[this.name] = [o[this.name]];
+                    }
+                    o[this.name].push(this.value || '');
+                } else {
+                    o[this.name] = this.value || '';
+                }
+            });
+            return o;
+        };
 
     </script>
 </head>
