@@ -16,7 +16,6 @@ public class FunSaleServerTest {
         InputStream resourceAsStream = Resources.getResourceAsStream("applicationContext.xml");
         SqlSessionFactory build = new SqlSessionFactoryBuilder().build(resourceAsStream);
         SqlSession sqlSession = build.openSession();
-        System.out.println(sqlSession);
         sqlSession.close();
     }
 }

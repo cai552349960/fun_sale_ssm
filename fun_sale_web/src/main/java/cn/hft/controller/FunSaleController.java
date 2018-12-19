@@ -4,21 +4,24 @@ import cn.hft.entity.FunSale;
 import cn.hft.entity.Result;
 import cn.hft.service.IFunSaleService;
 import com.github.pagehelper.PageInfo;
+import org.apache.commons.io.FileUtils;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.dom4j.io.OutputFormat;
 import org.dom4j.io.XMLWriter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -27,15 +30,23 @@ import java.util.*;
 @Controller
 @RequestMapping("/funSale")
 public class FunSaleController {
+    private static boolean flag = true;
     @Autowired
     private IFunSaleService funSaleService;
     @RequestMapping("/findAll")
     @ResponseBody
     public PageInfo<FunSale> findAll(@RequestParam(name = "page",required = true,defaultValue = "1")Integer page, @RequestParam(name = "size", required = true, defaultValue = "20")Integer size) throws Exception {
+        if (flag) {
 
+            List<FunSale> all = funSaleService.findAll();
+            boolean f = createXml(all);
+            if (f) {
+                flag = false;
+            }
+        }
         List<FunSale> all = null;
         try {
-            all = funSaleService.findAll(page,size);
+            all = funSaleService.findPage(page,size);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -110,16 +121,18 @@ public class FunSaleController {
     }
     @RequestMapping("/createXml")
     @ResponseBody
-    public Result createXml(@RequestParam(name = "page",required = true,defaultValue = "1")Integer page,@RequestParam(name="size",required = true,defaultValue = "20")Integer size) throws Exception {
-        try {
-            List<FunSale> all = findAll(page, size).getList();
-            createXml(all);
-            return new Result(1,"生成xml文件成功，请查看D://centreForSSM.xml文件。");
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new Result(0,"生成xml文件失败。");
-        }
+        public ResponseEntity createXml() throws Exception {
+        HttpHeaders headers = new HttpHeaders();
+        File file = new File("F:\\IdeaProjects\\fun_sale_ssm3\\fun_sale_web\\src\\main\\webapp\\funSale.xml");
+
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        headers.setContentDispositionFormData("attachment", "funSale");
+
+        return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file), headers, HttpStatus.CREATED);
+
     }
+
+
     public boolean createXml(List<FunSale> list){
         boolean b=false;
         Set hset = new HashSet<>();
@@ -127,9 +140,7 @@ public class FunSaleController {
         Element schoolEle=doc.addElement("funSale");//添加根元素
         schoolEle.addComment("文档的根funSale已经创建。");//添加注释
         List<FunSale> al = list;
-        for (FunSale funSale : al) {
-            System.out.println(funSale);
-        }
+
         for (int i = 0; i < al.size(); i++) {
             FunSale funSale=al.get(i);
             hset.add(funSale.getSaleID());
@@ -138,7 +149,6 @@ public class FunSaleController {
             Integer saleId=it.next();
             Element classEle=schoolEle.addElement("saleId");
             classEle.addAttribute("saleId", saleId+"");
-            System.out.println(saleId);
             for (int i = 0; i < al.size(); i++) {
                 FunSale funSale=al.get(i);
                 if (saleId == funSale.getSaleID()) {
@@ -160,7 +170,6 @@ public class FunSaleController {
                         funSale.setSaleUnitPrice(new BigDecimal(0));
                     }
                     UserEle.addElement("saleUnitPrice").addText(funSale.getSaleUnitPrice().toString());
-                    System.out.println(i);
                 }
             }
         }
@@ -178,7 +187,7 @@ public class FunSaleController {
    /*创建缩进格式的OutputFormat
    format = OutputFormat.createCompactFormat();
    */
-            File file = new File("D://centreForSSM.xml");
+            File file = new File("F:\\IdeaProjects\\fun_sale_ssm3\\fun_sale_web\\src\\main\\webapp\\funSale.xml");
             if (file.exists()) {
                 file.createNewFile();
             }

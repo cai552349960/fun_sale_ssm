@@ -6,11 +6,12 @@ import java.util.List;
 
 public interface IFunSaleService {
     /**
-     * 查询所有列表
+     * 分页查询所有列表
      * @return
      */
-    public List<FunSale> findAll(Integer pageNum, Integer pageSize);
+    public List<FunSale> findAll();
 
+    public List<FunSale> findPage(Integer pageNum, Integer pageSize);
     /**
      * 根据saleId查询结果
      * @param saleID 房源ID

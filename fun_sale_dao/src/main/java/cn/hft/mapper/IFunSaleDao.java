@@ -15,7 +15,7 @@ public interface IFunSaleDao {
      */
 //    @Select("select TOP(#{pageSize}) SALE_ID, SALE_SUBJECT ,BUILD_NAME, TRADE_ADDR, SALE_ROOM, SALE_INNERAREA, REGION_NAME, SECTION_NAME, UPDATE_TIME, SALE_TOTAL_PRICE, SALE_UNIT_PRICE from (select row_number() over(order by UPDATE_TIME desc) as rownumber,* from [FUN_SALE]) temp_row where rownumber>((#{pageNum}-1)*#{pageSize})  " )
     @Select("select SALE_ID, SALE_SUBJECT ,BUILD_NAME, TRADE_ADDR, SALE_ROOM, SALE_INNERAREA, REGION_NAME, SECTION_NAME, " +
-            "UPDATE_TIME, SALE_TOTAL_PRICE, SALE_UNIT_PRICE from [FUN_SALE] ORDER BY UPDATE_TIME asc" )
+            "UPDATE_TIME, SALE_TOTAL_PRICE, SALE_UNIT_PRICE from [FUN_SALE] ORDER BY UPDATE_TIME desc" )
     @Results({
             @Result(column = "SALE_ID", property = "saleID", jdbcType = JdbcType.INTEGER, id = true),
             @Result(column = "SALE_SUBJECT", property = "saleSubject", jdbcType = JdbcType.VARCHAR),
@@ -65,10 +65,10 @@ public interface IFunSaleDao {
      * 添加出售房源
      * @param funSale
      */
-    @Insert( "insert into [FUN_SALE](COMP_ID,CITY_ID,DEPT_ID,CREATION_TIME,SALE_NO,SALE_USEAGE,SALE_SUBJECT,NUMERIC,SALE_SOURCE,SALE_EXPLRTH,BUILD_NAME,TRADE_ADDR,SALE_ROOM,SALE_INNERAREA,REGION_NAME," +
-            "SECTION_NAME,UPDATE_TIME,SALE_TOTAL_PRICE,SALE_UNIT_PRICE,SALE_CONSIGN,SALE_MAP,PLATE_TYPE,SALE_STATUS,INFO_TYPE,SHARE_FLAG,RED_FLAG,FROM_PUBLIC,SALE_ID_OLD,HOUSE_BARGAIN,PANORAMA_MAP,YOUYOU_DEAL,IS_SALE_LEASE,HOUSE_SITUATION,OLD_TRUE_FLAG) " +
-            "VALUES(VALUES(NEXT VALUE FOR SEQ_FUN_SALE__SALE_ID,#{compID},#{cityID},#{deptID},#{creationTime},#{saleNo},#{saleUseage},#{saleSubject},#{numeric},#{saleSource},#{saleExplrth},#{buildName},#{tradeAddr},#{saleRoom},#{saleInnerarea},#{regionName}," +
-            "#{sectionName},#{updateTime},#{saleTotalPrice},#{saleUnitPrice},#{saleConsign},#{saleMap},#{plateType},#{saleStatus},#{infoType},#{shareFlag},#{redFlag},#{fromPublic},#{saleIdOld},#{houseBargain},#{panoramaMap}," +
+    @Insert( "insert into [FUN_SALE](SALE_ID,COMP_ID,CITY_ID,DEPT_ID,CREATION_TIME,SALE_NO,SALE_USEAGE,SALE_SUBJECT,SALE_AREA,SALE_SOURCE,SALE_EXPLRTH,BUILD_NAME,TRADE_ADDR,SALE_ROOM,SALE_INNERAREA,REGION_NAME," +
+            "SECTION_NAME,UPDATE_TIME,SALE_TOTAL_PRICE,SALE_UNIT_PRICE,SALE_CONSIGN,SALE_MAP,SALE_LEVEL,PLATE_TYPE,SALE_STATUS,INFO_TYPE,SHARE_FLAG,RED_FLAG,FROM_PUBLIC,SALE_ID_OLD,HOUSE_BARGAIN,PANORAMA_MAP,YOUYOU_DEAL,IS_SALE_LEASE,HOUSE_SITUATION,OLD_TRUE_FLAG) " +
+            "VALUES(NEXT VALUE FOR SEQ_FUN_SALE_SALE_ID,#{compID},#{cityID},#{deptID},#{creationTime},#{saleNo},#{saleUseage},#{saleSubject},#{saleArea},#{saleSource},#{saleExplrth},#{buildName},#{tradeAddr},#{saleRoom},#{saleInnerarea},#{regionName}," +
+            "#{sectionName},#{updateTime},#{saleTotalPrice},#{saleUnitPrice},#{saleConsign},#{saleMap},#{saleLevel},#{plateType},#{saleStatus},#{infoType},#{shareFlag},#{redFlag},#{fromPublic},#{saleIdOld},#{houseBargain},#{panoramaMap}," +
             "#{youyouDeal},#{isSaleLease},#{houseSituation},#{oldTrueFlag}) ")
     public void insert(FunSale funSale);
 

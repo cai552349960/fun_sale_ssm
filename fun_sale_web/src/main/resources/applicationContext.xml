@@ -51,6 +51,7 @@
                             <prop key="params">pageNum=start;pageSize=limit;</prop>
                             <prop key="supportMethodsArguments">true</prop>
                             <prop key="returnPageInfo">none</prop>
+                            <prop key="orderBy">desc</prop>
                         </props>
                     </property>
                 </bean>

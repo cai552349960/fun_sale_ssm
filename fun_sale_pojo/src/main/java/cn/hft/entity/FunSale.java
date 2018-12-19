@@ -3,7 +3,6 @@ package cn.hft.entity;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
-import java.util.Date;
 
 /**
  * 代表房源出租对象与数据库的FUN_SALE对应
@@ -17,13 +16,13 @@ public class FunSale implements Serializable {
     private String saleNo;//系统编码
     private Integer saleUseage;//房屋用途
     private String saleSubject;//房源标题
-    private Double numeric;//建筑面积
+    private BigDecimal saleArea;//建筑面积
     private Integer saleSource;//信息来源
     private Integer saleExplrth;//房勘，1=已勘0=未勘
     private String buildName;//楼盘名称
     private String tradeAddr;//商铺、厂房、车库、仓库：地址
     private Integer saleRoom;//几房/几室
-    private Double saleInnerarea;//套内面积
+    private BigDecimal saleInnerarea;//套内面积
     private String regionName;//行政区名称，区域名称
     private String sectionName;//片区名称，板块名称
     private Timestamp updateTime;//最后更新时间
@@ -31,6 +30,7 @@ public class FunSale implements Serializable {
     private BigDecimal saleUnitPrice;//单价
     private Integer saleConsign;//委托
     private Integer saleMap;//图片张数，默认=0
+    private Integer saleLevel;//级别
     private Integer plateType;//盘别
     private Integer saleStatus;//房屋状态
     private Integer infoType;//房源类型
@@ -56,7 +56,7 @@ public class FunSale implements Serializable {
                 ", saleNo='" + saleNo + '\'' +
                 ", saleUseage=" + saleUseage +
                 ", saleSubject='" + saleSubject + '\'' +
-                ", numeric=" + numeric +
+                ", saleArea=" + saleArea +
                 ", saleSource=" + saleSource +
                 ", saleExplrth=" + saleExplrth +
                 ", buildName='" + buildName + '\'' +
@@ -70,6 +70,7 @@ public class FunSale implements Serializable {
                 ", saleUnitPrice=" + saleUnitPrice +
                 ", saleConsign=" + saleConsign +
                 ", saleMap=" + saleMap +
+                ", saleLevel=" + saleLevel +
                 ", plateType=" + plateType +
                 ", saleStatus=" + saleStatus +
                 ", infoType=" + infoType +
@@ -150,12 +151,12 @@ public class FunSale implements Serializable {
         this.saleSubject = saleSubject;
     }
 
-    public Double getNumeric() {
-        return numeric;
+    public BigDecimal getSaleArea() {
+        return saleArea;
     }
 
-    public void setNumeric(Double numeric) {
-        this.numeric = numeric;
+    public void setSaleArea(BigDecimal saleArea) {
+        this.saleArea = saleArea;
     }
 
     public Integer getSaleSource() {
@@ -198,11 +199,11 @@ public class FunSale implements Serializable {
         this.saleRoom = saleRoom;
     }
 
-    public Double getSaleInnerarea() {
+    public BigDecimal getSaleInnerarea() {
         return saleInnerarea;
     }
 
-    public void setSaleInnerarea(Double saleInnerarea) {
+    public void setSaleInnerarea(BigDecimal saleInnerarea) {
         this.saleInnerarea = saleInnerarea;
     }
 
@@ -260,6 +261,14 @@ public class FunSale implements Serializable {
 
     public void setSaleMap(Integer saleMap) {
         this.saleMap = saleMap;
+    }
+
+    public Integer getSaleLevel() {
+        return saleLevel;
+    }
+
+    public void setSaleLevel(Integer saleLevel) {
+        this.saleLevel = saleLevel;
     }
 
     public Integer getPlateType() {

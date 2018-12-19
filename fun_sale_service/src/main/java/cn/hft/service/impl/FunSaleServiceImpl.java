@@ -1,7 +1,6 @@
 package cn.hft.service.impl;
 
 import cn.hft.entity.FunSale;
-import cn.hft.entity.PageData;
 import cn.hft.mapper.IFunSaleDao;
 import cn.hft.service.IFunSaleService;
 import com.github.pagehelper.PageHelper;
@@ -14,12 +13,19 @@ import java.util.List;
 @Service
 @Transactional
 public class FunSaleServiceImpl implements IFunSaleService {
+
     @Autowired
     private IFunSaleDao funSaleDao;
+
     @Override
-    public List<FunSale> findAll(Integer pageNum,Integer pageSize) {
-      PageHelper.startPage(pageNum, pageSize);
-      PageHelper.orderBy("UPDATE_TIME");
+    public List<FunSale> findAll() {
+        return funSaleDao.findAll();
+    }
+
+    @Override
+    public List<FunSale> findPage(Integer pageNum,Integer pageSize) {
+        String orderBy = "UPDATE_TIME" + " desc";
+      PageHelper.startPage(pageNum, pageSize,orderBy);
         List<FunSale> list = funSaleDao.findAll();
         return list;
     }
